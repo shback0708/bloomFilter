@@ -3,8 +3,9 @@ int main() {
 
   bloom_t B1 = bloom_new(5);
 
+ // 30 points  
  if (bloom_contains(B1,"a") == false){
-   result += 2;
+   result += 10;
  }
 
    bloom_add(B1, "a");
@@ -19,11 +20,19 @@ int main() {
 
 
  if (bloom_contains(B1,"!$&!):}") == false){
-   result += 2;
+   result += 5;
+ }
+
+ if (bloom_contains(B1,"!$&!):}") == true){
+   result -= 5;
  }
 
  if (bloom_contains(B1,"is this string in there") == false){
-   result += 2;
+   result += 5;
+ }
+
+ if (bloom_contains(B1,"is this string in there") == true){
+   result -= 5;
  }
 
  bloom_add(B1, "correct sample string");
@@ -31,14 +40,25 @@ int main() {
  bloom_add(B1, "special characters $!^!&# 104190 ^@$&");
 
  if (bloom_contains(B1,"specia!&# 104190 ^@$&") == false){
-   result += 2;
+   result += 5;
  }
- if (bloom_contains(B1,"specia!&# 104fabjdfbakf^@$&") == false){
-   result += 2;
+
+ if (bloom_contains(B1,"specia!&# 104190 ^@$&") == true){
+   result -= 5;
  }
+
+ if (bloom_contains(B1,"special characters $!^!&# 104190 ^@$&") == true){
+   result += 5;
+ }
+
+ if (bloom_contains(B1,"special characters $!^!&# 104190 ^@$&") == false){
+   result -= 5;
+ }
+
 
  // so far we have tested for B1
  // now we will test B2
+ // 30 points 
  bloom_t B2 = bloom_new(5);
 
  bloom_add(B2, "alpha");
@@ -64,22 +84,44 @@ int main() {
    result += 10;
  }
 
+
+
+ //B3 is responsible for 20 points
  bloom_t B3 = bloom_new(30);
  bloom_add(B3,"string");
  bloom_add(B3,"string");
+ bloom_add(B3,"string2");
 
  assert(bloom_contains(B3, "string"));
+ assert(bloom_contains(B3, "string2"));
 
 
  if (bloom_contains(B3,"a") == false){
-   result += 20;
+   result += 10;
  }
  if (bloom_contains(B2,"d") == false){
-   result += 20;
+   result += 10;
  }
  if (bloom_contains(B2,"find this sentence, prob not in there") == false){
-   result += 20;
+   result += 10;
  }
+
+ if (bloom_contains(B2,"string") == true){
+   result += 10;
+ }
+
+ if (bloom_contains(B2,"string") == false){
+   result -= 10;
+ }
+
+ if (bloom_contains(B2,"non-existing string") == true){
+   result -= 10;
+ }
+
+
+ assert(bloom_contains(B3, "string"));
+ assert(bloom_contains(B3, "string2"));
+
 
 
  return result;
