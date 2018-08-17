@@ -1,0 +1,91 @@
+int main() {
+  int result = 0;
+
+  bloom_t B1 = bloom_new(5);
+
+ if (bloom_contains(B1,"a") == false){
+   result += 2;
+ }
+
+   bloom_add(B1, "a");
+   bloom_add(B1, "b");
+   bloom_add(B1, "c");
+   bloom_add(B1, "d");
+
+  assert(bloom_contains(B1, "a"));
+  assert(bloom_contains(B1, "b"));
+  assert(bloom_contains(B1, "c"));
+  assert(bloom_contains(B1, "d"));
+
+
+ if (bloom_contains(B1,"!$&!):}") == false){
+   result += 2;
+ }
+
+ if (bloom_contains(B1,"is this string in there") == false){
+   result += 2;
+ }
+
+ bloom_add(B1, "correct sample string");
+
+ bloom_add(B1, "special characters $!^!&# 104190 ^@$&");
+
+ if (bloom_contains(B1,"specia!&# 104190 ^@$&") == false){
+   result += 2;
+ }
+ if (bloom_contains(B1,"specia!&# 104fabjdfbakf^@$&") == false){
+   result += 2;
+ }
+
+ // so far we have tested for B1
+ // now we will test B2
+ bloom_t B2 = bloom_new(5);
+
+ bloom_add(B2, "alpha");
+ bloom_add(B2, "beta");
+ bloom_add(B2, "gamma");
+ bloom_add(B2, "delta");
+ bloom_add(B2, "epsilon");
+
+ if (bloom_contains(B2,"a") == false){
+   result += 10;
+ }
+
+ assert(bloom_contains(B2, "alpha"));
+
+ bloom_add(B2, "This time instead of writing a word I'll put in sentence");
+ if (bloom_contains(B2,"") == false){
+   result += 10;
+ }
+
+ bloom_add(B1, "");
+
+ if (bloom_contains(B2,"zeta") == false){
+   result += 10;
+ }
+
+ bloom_t B3 = bloom_new(30);
+ bloom_add(B3,"string");
+ bloom_add(B3,"string");
+
+ assert(bloom_contains(B3, "string"));
+
+
+ if (bloom_contains(B3,"a") == false){
+   result += 20;
+ }
+ if (bloom_contains(B2,"d") == false){
+   result += 20;
+ }
+ if (bloom_contains(B2,"find this sentence, prob not in there") == false){
+   result += 20;
+ }
+
+
+ return result;
+}
+
+
+
+
+
